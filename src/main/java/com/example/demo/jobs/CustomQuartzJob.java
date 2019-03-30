@@ -45,19 +45,15 @@ public class CustomQuartzJob extends QuartzJobBean {
     }
 
     @Override
-    protected void executeInternal(JobExecutionContext context) throws JobExecutionException
-    {
-        try
-        {
+    protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
+        try {
             Job job = jobLocator.getJob(jobName);
             JobParameters params = new JobParametersBuilder()
                     .addString("JobID", String.valueOf(System.currentTimeMillis()))
                     .toJobParameters();
 
             jobLauncher.run(job, params);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

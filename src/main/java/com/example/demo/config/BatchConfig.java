@@ -23,16 +23,16 @@ public class BatchConfig {
     private StepBuilderFactory steps;
 
 
-    @Bean(name="demoJobOne")
-    public Job demoJobOne(){
+    @Bean(name = "demoJobOne")
+    public Job demoJobOne() {
         return jobs.get("demoJobOne")
                 .start(stepOne())
                 .next(stepTwo())
                 .build();
     }
 
-    @Bean(name="demoJobTwo")
-    public Job demoJobTwo(){
+    @Bean(name = "demoJobTwo")
+    public Job demoJobTwo() {
         return jobs.get("demoJobTwo")
                 .flow(stepOne())
                 .build()
@@ -40,14 +40,14 @@ public class BatchConfig {
     }
 
     @Bean
-    public Step stepOne(){
+    public Step stepOne() {
         return steps.get("stepOne")
                 .tasklet(new MyTaskOne())
                 .build();
     }
 
     @Bean
-    public Step stepTwo(){
+    public Step stepTwo() {
         return steps.get("stepTwo")
                 .tasklet(new MyTaskTwo())
                 .build();

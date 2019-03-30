@@ -2,6 +2,7 @@ package com.example.demo.config;
 
 import com.example.demo.jobs.domain.Keyword;
 import com.example.demo.jobs.domain.KeywordUrl;
+import com.example.demo.util.AmazonS3Util;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.OutputType;
@@ -64,7 +65,7 @@ public class SearchingImageConvertJobConfiguration {
     @Bean
     public JpaPagingItemReader<Keyword> reader() {
         return new JpaPagingItemReaderBuilder<Keyword>()
-                .name(BEAN_PREFIX+"reader")
+                .name(BEAN_PREFIX + "reader")
                 .entityManagerFactory(emf)
                 .pageSize(chunkSize)
                 .queryString("SELECT k FROM Keyword k")
@@ -86,7 +87,7 @@ public class SearchingImageConvertJobConfiguration {
 
 
             // 스크린샷
-            TakesScreenshot screenshot = (TakesScreenshot)driver;
+            TakesScreenshot screenshot = (TakesScreenshot) driver;
             byte[] imageByte = screenshot.getScreenshotAs(OutputType.BYTES);
             try (FileOutputStream fos = new FileOutputStream(System.getProperty("user.home") + "/screenshot/" + url + ".png")) {
                 fos.write(imageByte);
@@ -96,7 +97,11 @@ public class SearchingImageConvertJobConfiguration {
             // 드라이버 종료
             driver.quit();
 
-            KeywordUrl keywordUrl = new KeywordUrl(keyword.getId(), url);
+            AmazonS3Util.uploadFile(url, imageByte);
+            String s3Url = AmazonS3Util.getFileURL(url);
+//            log.info(">>>>> s3Url = {}", s3Url);
+//            log.info(">>>>> s3UrlLength = {}", s3Url.length());
+            KeywordUrl keywordUrl = new KeywordUrl(keyword.getId(), s3Url);
 
             return keywordUrl;
         };

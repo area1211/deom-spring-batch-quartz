@@ -87,7 +87,7 @@ public class QuartzConfig {
     public Trigger imageConvertJobTrigger() {
         SimpleScheduleBuilder scheduleBuilder = SimpleScheduleBuilder
                 .simpleSchedule()
-                .withIntervalInSeconds(10)
+                .withIntervalInSeconds(20)
                 .repeatForever();
 
         return TriggerBuilder
@@ -99,8 +99,7 @@ public class QuartzConfig {
     }
 
     @Bean
-    public Trigger jobOneTrigger()
-    {
+    public Trigger jobOneTrigger() {
         SimpleScheduleBuilder scheduleBuilder = SimpleScheduleBuilder
                 .simpleSchedule()
                 .withIntervalInSeconds(10)
@@ -115,8 +114,7 @@ public class QuartzConfig {
     }
 
     @Bean
-    public Trigger jobTwoTrigger()
-    {
+    public Trigger jobTwoTrigger() {
         SimpleScheduleBuilder scheduleBuilder = SimpleScheduleBuilder
                 .simpleSchedule()
                 .withIntervalInSeconds(20)
@@ -131,8 +129,7 @@ public class QuartzConfig {
     }
 
     @Bean
-    public SchedulerFactoryBean schedulerFactoryBean() throws IOException
-    {
+    public SchedulerFactoryBean schedulerFactoryBean() throws IOException {
         SchedulerFactoryBean scheduler = new SchedulerFactoryBean();
         scheduler.setTriggers(jobOneTrigger(), jobTwoTrigger(), imageConvertJobTrigger());
         scheduler.setQuartzProperties(quartzProperties());
@@ -141,8 +138,7 @@ public class QuartzConfig {
     }
 
     @Bean
-    public Properties quartzProperties() throws IOException
-    {
+    public Properties quartzProperties() throws IOException {
         PropertiesFactoryBean propertiesFactoryBean = new PropertiesFactoryBean();
         propertiesFactoryBean.setLocation(new ClassPathResource("/quartz.properties"));
         propertiesFactoryBean.afterPropertiesSet();
