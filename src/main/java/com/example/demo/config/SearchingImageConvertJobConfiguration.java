@@ -9,6 +9,7 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
@@ -89,7 +90,10 @@ public class SearchingImageConvertJobConfiguration {
             log.info("Keyword url = {}", url);
 
             // 해당 검색어로 크롤링 후 스크린샷으로 변환
-            WebDriver driver = new ChromeDriver();
+            ChromeOptions options = new ChromeOptions();
+            options.addArguments("headless");
+
+            WebDriver driver = new ChromeDriver(options);
             driver.get(SEARCH_NAVER_URL + keyword.getName() + NEWS_QUERY);
 
 
