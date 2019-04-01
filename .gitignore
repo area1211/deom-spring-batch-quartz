@@ -28,3 +28,4 @@ HELP.md
 ### VS Code ###
 .vscode/
 src/main/resources/application.properties
+aws.yml

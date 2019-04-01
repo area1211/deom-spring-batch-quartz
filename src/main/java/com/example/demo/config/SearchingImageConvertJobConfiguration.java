@@ -2,7 +2,7 @@ package com.example.demo.config;
 
 import com.example.demo.jobs.domain.Keyword;
 import com.example.demo.jobs.domain.KeywordUrl;
-import com.example.demo.util.AmazonS3Util;
+import com.example.demo.util.S3Uploader;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.OutputType;
@@ -33,12 +33,19 @@ import java.io.FileOutputStream;
 @EnableBatchProcessing
 public class SearchingImageConvertJobConfiguration {
 
+    private static final String SEARCH_NAVER_URL = "https://search.naver.com/search.naver?query=";
+    private static final String NEWS_QUERY = "&where=news&ie=utf8&sm=nws_hty";
+
+    private static final String BASE_S3_PATH = "https://s3.us-east-2.amazonaws.com/demosearchingimage/";
+
     public static final String JOB_NAME = "SearchingImageConvertBatch";
     public static final String BEAN_PREFIX = JOB_NAME + "_";
 
     private final JobBuilderFactory jobBuilderFactory;
     private final StepBuilderFactory stepBuilderFactory;
     private final EntityManagerFactory emf;
+
+    private final S3Uploader s3Uploader;
 
     @Value("${chunkSize:1000}")
     private int chunkSize;
@@ -83,7 +90,7 @@ public class SearchingImageConvertJobConfiguration {
 
             // 해당 검색어로 크롤링 후 스크린샷으로 변환
             WebDriver driver = new ChromeDriver();
-            driver.get("https://search.naver.com/search.naver?sm=top_hty&fbm=1&ie=utf8&query=" + keyword.getName());
+            driver.get(SEARCH_NAVER_URL + keyword.getName() + NEWS_QUERY);
 
 
             // 스크린샷
@@ -97,10 +104,8 @@ public class SearchingImageConvertJobConfiguration {
             // 드라이버 종료
             driver.quit();
 
-            AmazonS3Util.uploadFile(url, imageByte);
-            String s3Url = AmazonS3Util.getFileURL(url);
-//            log.info(">>>>> s3Url = {}", s3Url);
-//            log.info(">>>>> s3UrlLength = {}", s3Url.length());
+            s3Uploader.uploadFile(url, imageByte);
+            String s3Url = BASE_S3_PATH + url;
             KeywordUrl keywordUrl = new KeywordUrl(keyword.getId(), s3Url);
 
             return keywordUrl;

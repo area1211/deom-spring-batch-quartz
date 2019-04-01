@@ -14,12 +14,7 @@ spring:
       username: sa
       password:
       driver-class-name: org.h2.Driver
+
 ---
-spring:
-  profiles: mysql
-  datasource:
-    hikari:
-      jdbc-url: jdbc:mysql://localhost:3306/spring_batch?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
-      username: root
-      password: Wjddlsgh123!
-      driver-class-name: com.mysql.cj.jdbc.Driver
+spring.profiles: set1
+spring.profiles.include: real-db
