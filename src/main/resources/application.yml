@@ -18,3 +18,14 @@ spring:
 ---
 spring.profiles: set1
 spring.profiles.include: real-db
+
+cloud:
+  aws:
+    s3:
+      bucket: demosearchingimage
+    region:
+      static: us-east-2
+    stack:
+      auto: false
+    credentials:
+      instanceProfile: true
