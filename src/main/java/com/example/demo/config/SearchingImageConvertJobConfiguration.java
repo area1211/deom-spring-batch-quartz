@@ -84,7 +84,8 @@ public class SearchingImageConvertJobConfiguration {
     public ItemProcessor<Keyword, KeywordUrl> processor() {
         return keyword -> {
             // 크롬 드라이버의 경로를 설정
-            System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir") + "/drivers/chromedriver");
+            System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
+//            System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir") + "/drivers/chromedriver");
 
             String url = keyword.getName() + System.currentTimeMillis();
             log.info("Keyword url = {}", url);
