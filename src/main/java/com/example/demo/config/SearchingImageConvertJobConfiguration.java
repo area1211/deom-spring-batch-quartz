@@ -101,10 +101,10 @@ public class SearchingImageConvertJobConfiguration {
             // 스크린샷
             TakesScreenshot screenshot = (TakesScreenshot) driver;
             byte[] imageByte = screenshot.getScreenshotAs(OutputType.BYTES);
-            try (FileOutputStream fos = new FileOutputStream(System.getProperty("user.home") + "/screenshot/" + url + ".png")) {
-                fos.write(imageByte);
-                fos.close();
-            }
+//            try (FileOutputStream fos = new FileOutputStream(System.getProperty("user.home") + "/screenshot/" + url + ".png")) {
+//                fos.write(imageByte);
+//                fos.close();
+//            }
 
             // 드라이버 종료
             driver.quit();
