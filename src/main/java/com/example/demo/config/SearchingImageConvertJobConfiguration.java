@@ -87,12 +87,13 @@ public class SearchingImageConvertJobConfiguration {
             System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
 //            System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir") + "/drivers/chromedriver");
 
-            String url = keyword.getName() + System.currentTimeMillis();
+            String url = keyword.getName() + "/" + keyword.getName() + System.currentTimeMillis();
             log.info("Keyword url = {}", url);
 
             // 해당 검색어로 크롤링 후 스크린샷으로 변환
             ChromeOptions options = new ChromeOptions();
             options.addArguments("headless");
+            options.addArguments("--lang=ko");
 
             WebDriver driver = new ChromeDriver(options);
             driver.get(SEARCH_NAVER_URL + keyword.getName() + NEWS_QUERY);
