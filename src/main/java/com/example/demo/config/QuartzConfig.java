@@ -87,7 +87,7 @@ public class QuartzConfig {
     public Trigger imageConvertJobTrigger() {
         SimpleScheduleBuilder scheduleBuilder = SimpleScheduleBuilder
                 .simpleSchedule()
-                .withIntervalInSeconds(20)
+                .withIntervalInSeconds(40)
                 .repeatForever();
 
         return TriggerBuilder

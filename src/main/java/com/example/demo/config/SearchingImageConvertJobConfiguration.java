@@ -1,6 +1,7 @@
 package com.example.demo.config;
 
 import com.example.demo.jobs.domain.Keyword;
+import com.example.demo.jobs.domain.KeywordRepository;
 import com.example.demo.jobs.domain.KeywordUrl;
 import com.example.demo.util.S3Uploader;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,7 @@ import org.springframework.context.annotation.Configuration;
 
 import javax.persistence.EntityManagerFactory;
 import java.io.FileOutputStream;
+import java.time.LocalDateTime;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -47,6 +49,8 @@ public class SearchingImageConvertJobConfiguration {
     private final EntityManagerFactory emf;
 
     private final S3Uploader s3Uploader;
+
+    private final KeywordRepository keywordRepository;
 
     @Value("${chunkSize:1000}")
     private int chunkSize;
@@ -113,6 +117,9 @@ public class SearchingImageConvertJobConfiguration {
             s3Uploader.uploadFile(url, imageByte);
             String s3Url = BASE_S3_PATH + url;
             KeywordUrl keywordUrl = new KeywordUrl(keyword.getId(), s3Url);
+
+            // 최근 이미지 생성 시간으로 modified_date를 변경해줌
+            keywordRepository.updateKeywordSetModifiedDateForName(LocalDateTime.now(), keyword.getName());
 
             return keywordUrl;
         };
