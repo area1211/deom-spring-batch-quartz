@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Getter
@@ -14,7 +15,7 @@ import java.time.format.DateTimeFormatter;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @ToString
-public class KeywordUrl {
+public class KeywordUrl extends BaseTimeEntity{
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
 
     @Id
@@ -22,12 +23,17 @@ public class KeywordUrl {
     private Long id;
     private Long keywordId;
     private String url;
-//    private String txName;
-//    private LocalDateTime txDateTime;
 
     public KeywordUrl(Long keywordId, String url) {
         this.keywordId = keywordId;
         this.url = url;
+    }
+
+    public KeywordUrl(Long keywordId, String url, LocalDateTime createdDate) {
+        this.keywordId = keywordId;
+        this.url = url;
+        this.createdDate = createdDate;
+        this.modifiedDate = createdDate;
     }
 
 

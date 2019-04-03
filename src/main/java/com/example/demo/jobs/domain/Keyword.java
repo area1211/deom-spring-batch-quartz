@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @ToString
-public class Keyword {
+public class Keyword{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
