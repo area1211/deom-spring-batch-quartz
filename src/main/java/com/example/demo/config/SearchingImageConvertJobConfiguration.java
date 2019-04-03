@@ -36,8 +36,8 @@ import java.time.LocalDateTime;
 @EnableBatchProcessing
 public class SearchingImageConvertJobConfiguration {
 
-    private static final String SEARCH_NAVER_URL = "https://search.naver.com/search.naver?query=";
-    private static final String NEWS_QUERY = "&where=news&ie=utf8&sm=nws_hty";
+    private static final String SEARCH_NAVER_URL = "https://search.naver.com/search.naver?where=news&query=";
+    private static final String NEWS_QUERY = "&sm=tab_srt&sort=1";
 
     private static final String BASE_S3_PATH = "https://s3.us-east-2.amazonaws.com/demosearchingimage/";
 
