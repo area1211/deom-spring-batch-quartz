@@ -124,6 +124,7 @@ public class SearchingImageConvertJobConfiguration {
 
             // 최근 이미지 생성 시간으로 modified_date를 변경해줌
             keywordRepository.updateKeywordSetModifiedDateForName(LocalDateTime.now(), keyword.getName());
+            keywordRepository.updateKeywordSetImgCreatedDateForName(LocalDateTime.now(), keyword.getName());
 
             return keywordUrl;
         };

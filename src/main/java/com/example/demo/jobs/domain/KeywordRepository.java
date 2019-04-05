@@ -31,5 +31,10 @@ public interface KeywordRepository extends JpaRepository<Keyword, Long> {
     int updateKeywordSetModifiedDateForName(@Param("now") LocalDateTime now,
                                    @Param("name") String name);
 
+    @Modifying
+    @Query("update Keyword k set k.img_created_date = :now where k.name = :name")
+    int updateKeywordSetImgCreatedDateForName(@Param("now") LocalDateTime now,
+                                            @Param("name") String name);
+
 
 }

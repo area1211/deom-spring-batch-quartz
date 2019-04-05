@@ -22,6 +22,7 @@ public class Keyword{
     private String name;
     private LocalDateTime created_date;
     private LocalDateTime modified_date;
+    private LocalDateTime img_created_date;
 
     @Builder
     public Keyword(String name) {
